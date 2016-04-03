@@ -1,0 +1,197 @@
+<%= form_for @applicant, html: {multipart: true} do |f| %>
+  <% if @applicant.errors.full_messages.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@applicant.errors.count, "error") %> prohibited this applicant from being saved:</h2>
+      <ul>
+      <% @applicant.errors.full_messages.each do |message| %>
+        <li><%= message if @applicant.errors.full_messages.first == message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  
+<hr>  
+<br>
+  <div class="field fonty formpad">
+<h3>
+ البيانات الشخصية
+</h3>
+  <br>
+  </div>
+
+  <div class="field fonty formpad">
+    <%= f.label :name, "الاسم"%><br>
+    <%= f.text_field :name, :required => true  %>
+  </div>
+</br>
+  <div class="field fonty formpad">
+    <%= f.label :QID, "الرقم الشخصي" %><br>
+    <%= f.text_field :QID, :required => true  %>
+  </div>
+</br>
+
+  <div class="field fonty formpad">
+    <%= f.label :image, "صورة البطاقة الشخصية"%><br>
+    <%= f.file_field :image, :required => true  %>
+  </div>
+</br>
+
+  <div class="field fonty formpad">
+    <%= f.label :nationality, "الجنسية"%><br>
+    <%= f.collection_select :nationality, Country.all, :name, :name, :required => true, :selected => 'Qatar' %>
+
+  </div>
+  </br>
+  
+  <div class="field fonty formpad">
+    <%= f.label :DateOfBirth, "تاريخ الميلاد"%><br>
+	<%= f.date_select :DateOfBirth, :start_year=> 1950, :end_year=> (Time.now.year-18), :required => true  %>  </div>
+  </br>
+  
+  <div class="field fonty formpad">
+    <%= f.label :gender, "الجنس"%><br>
+    <%= f.select(:gender, Applicant::GENDER_LIST,:required => true)  %>
+  </div>
+  </br>
+  
+  <div class="field fonty formpad">
+    <%= f.label :status, "الحالة الإجتماعية" %><br>
+    <%= f.select(:status,Applicant::STATUS_LIST, :required => true)  %>
+  </div>
+  </br>
+  
+  <div class="field fonty formpad">
+    <%= f.label :noOfChildren, "عدد الأطفال" %><br>
+    <%= f.number_field :noOfChildren  %>
+  </div>
+  </br>
+  
+  <div class="field fonty formpad">
+    <%= f.label :livingArea, "المنطقة السكنية "%><br>
+    <%= f.text_field :livingArea, :required => true  %>
+  </div>
+  </br>
+  
+  <div class="field fonty formpad">
+    <%= f.label :phoneNo, "رقم الهاتف" %><br>
+    <%= f.text_field :phoneNo %>
+  </div>
+  </br>
+  
+  <div class="field fonty formpad">
+    <%= f.label :mobileNo, "رقم الجوال" %><br>
+    <%= f.text_field :mobileNo, :required => true  %>
+  </div>
+  </br>
+  
+<hr>  
+
+  <div class="field fonty formpad">
+<h3>
+حالة الإعاقة 
+</h3>
+
+
+ <br>
+  </div>
+
+
+
+  <div class="field fonty formpad">
+      <%= f.label :disability, "نوع الإعاقة", :required => true%>
+    <%= f.check_box :disability, collection: 1..5 %> "إعاقة سمعية"<br>
+	  
+	  <br><input type= "checkbox" name="إعاقة سمعية"  value="إعاقة سمعية" id="disability"> إعاقة سمعية<br>
+	  <input type= "checkbox" name="إعاقة بصرية" value="إعاقة بصرية" id="disability"> إعاقة بصرية<br>
+	  <input type= "checkbox" name=" إعاقةحركية" value="إعاقة حركية" id="disability"> إعاقة حركية<br>
+	  <input type= "checkbox" name="إعاقة ذهنية" value="إعاقة ذهنية" id="disability"> إعاقة ذهنية<br>
+  </div>
+  
+    </br>
+  <div class="field fonty formpad">
+    <%= f.label :details, "التفاصيل"%><br>
+    <%= f.text_field :details, :required => true  %>
+  </div>
+    </br>
+  <div class="field fonty formpad">
+    <%= f.label :notes, "ملاحظات"%><br>
+    <%= f.text_area :notes %>
+  </div>
+    </br>
+  <div class="field fonty formpad">
+    <%= f.label :age, "العمر عند الإصابة بالإعاقة" %><br>
+    <%= f.text_field :age, :required => true  %>
+  </div>
+    </br>
+  <div class="field fonty formpad">
+    <%= f.label :reason, "أسباب الإصابة" %><br>
+    <%= f.text_field :reason %>
+  </div>
+    </br>
+<hr>  
+
+
+  <div class="field fonty formpad">
+	  <h3>
+المؤهلات والخبرات
+	  </h3>
+
+
+ <br>
+  </div>
+
+  <div class="field fonty formpad">
+    <%= f.label :education, "المستوى التعليمي"%><br>
+    <%= f.select(:education,Applicant::EDUCATION_LIST, :required => true) %>
+  </div>
+  </br>
+  
+  <div class="field fonty formpad">
+    <%= f.label :workshop, "الدورات" %><br>
+    <%= f.text_area :workshop %>
+  </div>
+  </br>
+  
+<div class="field fonty formpad">
+    <%= f.label :currentJob, "هل تشغل وظيفة حاليًا"%><br>
+    <%= f.radio_button :currentJob, true, :checked => true %> نعم
+            <br>
+    <%= f.radio_button :currentJob, false %> لا
+  </div>
+  </br>
+  
+  <div class="field fonty formpad">
+    <%= f.label :jobDescription, "الوظائف التي عملت بها"%><br>
+    <%= f.text_area :jobDescription %>
+  </div>
+  </br>
+  
+  <div class="field fonty formpad">
+    <%= f.label :abilities, " الوظيفة التي تستطيع القيام بها" %><br>
+    <%= f.text_area :abilities %>
+  </div>
+  </br>
+  
+  <div class="field fonty formpad">
+    <%= f.label :preference, "الوزارات/ المؤسسات المرشحة للتوظيف" %><br>
+    <%= f.text_area :preference %>
+  </div>
+  </br>
+  
+  <div class="field fonty formpad">
+    <%= f.label :skills, "الخبرات"%><br>
+    <%= f.text_field :skills %>
+  </div>
+  </br>
+  
+  <div class="field fonty formpad">
+	<input type= "checkbox" required name=" إعاقةحركية" value="إعاقة حركية" id="disability"> بتقديمي هذا الطلب، أوافق على مشاركة معلوماتي الشخصية مع الجهات والمؤسسات الباحثة عن موظف<br>
+  </div>
+  
+  </br>
+  <div class="actions fonty formpad">
+    <%= f.submit "حفظ" %>
+  </div>
+  
+<% end %>
